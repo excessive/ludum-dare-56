@@ -1,0 +1,80 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx8s8k4uunybd"]
+
+[ext_resource type="Texture2D" uid="uid://ctlxpjrl6lam2" path="res://icon.svg" id="1_fw2jo"]
+
+[node name="MarginContainer" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 2
+ratio = 1.33
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AspectRatioContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="AspectRatioContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="play" type="Button" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "play"
+
+[node name="options" type="Button" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "options"
+
+[node name="quit" type="Button" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "quit"
+
+[node name="PanelContainer2" type="PanelContainer" parent="AspectRatioContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="AspectRatioContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspectRatioContainer/HBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AspectRatioContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]credits[/b]
+i have made game
+
+[b]todo list so i can't ignore it[/b]
+[ul]
+ everything
+ also everything
+[/ul]
+
+[b]also notes[/b]
+aaaaaaaaaaaa"
+fit_content = true
+
+[node name="Icon" type="Sprite2D" parent="AspectRatioContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
+position = Vector2(97.32, 496)
+texture = ExtResource("1_fw2jo")
+
+[node name="PanelContainer3" type="PanelContainer" parent="AspectRatioContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3

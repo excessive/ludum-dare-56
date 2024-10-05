@@ -9,6 +9,10 @@ enum SocketMode {
 
 @export var charge_mode: SocketMode = SocketMode.Charge
 @export var base_power: float = 0.0
+@export var indicator_enabled: bool = true
+@export var indicator_color: Color = Color.GREEN
+@export var indicator_power: float = 5.0
+
 @export_range(-1, 1, 0.01, "or_greater") var idle_drain := 0.0
 var label := Label3D.new()
 var power: float = base_power
@@ -18,6 +22,9 @@ var _wire: Cable
 func _ready() -> void:
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.no_depth_test = true
+	$light.max_power = indicator_power
+	$light.light_color = indicator_color
+	$light.set_process(indicator_enabled)
 
 func cable_connected() -> bool:
 	return _wire and is_instance_valid(_wire)

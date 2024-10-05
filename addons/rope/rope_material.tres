@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bbatuvqq1yjxn"]
+
+[ext_resource type="Texture2D" uid="uid://dh5w0dwy0qvgj" path="res://addons/rope/textures/rope.jpg" id="1"]
+
+[resource]
+cull_mode = 2
+depth_draw_mode = 1
+shading_mode = 0
+albedo_texture = ExtResource("1")
+uv1_scale = Vector3(0.5, 1, 1)
+texture_filter = 5
+disable_receive_shadows = true

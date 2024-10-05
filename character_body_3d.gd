@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-const SPEED = 2.0
+const SPEED = 5.0
 
 var _nearest_plug: CableSocket
 var _current_plug: CableSocket
@@ -31,6 +31,9 @@ func _physics_process(delta: float) -> void:
 			_nearest_plug.unplug()
 			add_child(Cable.new(_nearest_plug, _current_plug))
 		_current_plug = null
+
+	if Input.is_action_just_pressed("jump"):
+		velocity -= get_gravity() * 0.25
 
 func _update_nearest_plug():
 	_nearest_plug = null

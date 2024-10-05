@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://djp54qk551qsw"]
+
+[ext_resource type="Script" path="res://addons/rope/verlet_rope.gd" id="1_kfmrg"]
+
+[node name="VerletRope" type="MeshInstance3D"]
+script = ExtResource( "1_kfmrg" )
+attach_end_to = NodePath("")

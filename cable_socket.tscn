@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bm2num3cbkjcf"]
+[gd_scene load_steps=6 format=3 uid="uid://bm2num3cbkjcf"]
 
 [ext_resource type="Script" path="res://cable_socket.gd" id="1_yyn2a"]
 
@@ -6,6 +6,23 @@
 radius = 0.1
 
 [sub_resource type="BoxMesh" id="BoxMesh_b2c1h"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="GDScript" id="GDScript_lxfaj"]
+script/source = "extends OmniLight3D
+
+@export var max_power := 1.0
+
+func _ready() -> void:
+	visible = false
+
+func _process(delta: float) -> void:
+	var target := pow(clampf(get_parent().power / max_power, 0, 1), 2.0)
+	light_energy = move_toward(light_energy, target, delta)
+	visible = light_energy > 0.001
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h0hw1"]
 size = Vector3(0.1, 0.1, 0.1)
 
 [node name="plug" type="Area3D"]
@@ -19,3 +36,18 @@ shape = SubResource("SphereShape3D_y8d6c")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_b2c1h")
+
+[node name="light" type="OmniLight3D" parent="."]
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 10.0
+distance_fade_shadow = 5.0
+distance_fade_length = 5.0
+omni_range = 0.5
+omni_shadow_mode = 0
+script = SubResource("GDScript_lxfaj")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
+shape = SubResource("BoxShape3D_h0hw1")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bmyahiyh3x7j4"]
+[gd_scene load_steps=25 format=3 uid="uid://bmyahiyh3x7j4"]
 
 [ext_resource type="Script" path="res://stage_area.gd" id="1_l6n6m"]
 [ext_resource type="PackedScene" uid="uid://b0jwplxuwswa1" path="res://hud.tscn" id="2_vg55a"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bdbx7tru3nnk2" path="res://queue_win.tscn" id="11_mwr2v"]
 [ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://cable_socket.tscn" id="12_72u27"]
 [ext_resource type="PackedScene" uid="uid://d0kxh5ogv55c7" path="res://victory.tscn" id="12_hogso"]
+[ext_resource type="PackedScene" uid="uid://bbfksrj17d8sy" path="res://sliding_door.tscn" id="13_x4pok"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ycdg"]
 
@@ -22,6 +23,7 @@ size = Vector3(500, 0.5, 500)
 albedo_color = Color(0.482973, 0.482973, 0.482973, 1)
 albedo_texture = ExtResource("7_qkfsk")
 uv1_triplanar = true
+texture_filter = 5
 
 [sub_resource type="BoxMesh" id="BoxMesh_dl2mr"]
 material = SubResource("StandardMaterial3D_qbjay")
@@ -35,18 +37,26 @@ size = Vector3(100, 0.5, 100)
 script/source = "extends HingeJoint3D
 
 @export var plug: CableSocket
+@export var max_power := 1.0
 
 func _physics_process(delta: float) -> void:
-	var v: float = plug.power if plug else 0.0
-	set(\"motor/enable\", v > 0)
-	set(\"motor/target_velocity\", move_toward(get(\"motor/target_velocity\"), v * 10, 10 * delta))
+	var v: float = clampf(plug.power / max_power, 0, 1) if plug else 0.0
+	v *= -PI/2
+	set(\"angular_limit/enable\", true)
+	set(\"angular_limit/lower\", move_toward(get(\"angular_limit/lower\"), v, 10 * delta))
+	set(\"angular_limit/upper\", move_toward(get(\"angular_limit/upper\"), v, 10 * delta))
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mygbb"]
-size = Vector3(1, 1, 0.1)
+margin = 0.02
+size = Vector3(0.1, 1, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_vrqkc"]
-size = Vector3(1, 1, 0.1)
+size = Vector3(0.1, 1, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kpjl5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_i0k3q"]
 
 [node name="stage_area" type="Area3D"]
 monitorable = false
@@ -93,10 +103,12 @@ resources = [PackedStringArray("loss", "queue_lose", "queue_win", "victory"), [E
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.213582, 0.0248717, 2.65201)
 charge_mode = 1
 base_power = 5.0
+indicator_color = Color(1, 1, 0, 1)
 
 [node name="plug2" parent="." instance=ExtResource("12_72u27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.68245, 0.0248717, 2.65201)
 charge_mode = 2
+indicator_color = Color(1, 0, 0, 1)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25703, 0.0248717, 1.29311)
@@ -113,24 +125,58 @@ shape = SubResource("BoxShape3D_u4ofv")
 mesh = SubResource("BoxMesh_crbhq")
 skeleton = NodePath("../../StaticBody3D2")
 
-[node name="SliderJoint3D" type="HingeJoint3D" parent="StaticBody3D2" node_paths=PackedStringArray("plug")]
-transform = Transform3D(1.91069e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, 0, 0.585695, 0)
+[node name="hinge" type="HingeJoint3D" parent="StaticBody3D2" node_paths=PackedStringArray("plug")]
+transform = Transform3D(1.91069e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, -0.261717, 0.587117, 0.280536)
 node_a = NodePath("..")
 node_b = NodePath("RigidBody3D")
+exclude_nodes_from_collision = false
 script = SubResource("GDScript_45dnf")
 plug = NodePath("../plug3")
+max_power = 5.0
 
-[node name="RigidBody3D" type="RigidBody3D" parent="StaticBody3D2/SliderJoint3D"]
-transform = Transform3D(-4.37114e-08, 4.37114e-08, -1, -4.37114e-08, 1, 4.37114e-08, 1, 4.37114e-08, -4.37114e-08, 0, 0, 0.537446)
+[node name="RigidBody3D" type="RigidBody3D" parent="StaticBody3D2/hinge"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0571101, 0.252663, 0.431)
 can_sleep = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/SliderJoint3D/RigidBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/hinge/RigidBody3D"]
 shape = SubResource("BoxShape3D_mygbb")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/SliderJoint3D/RigidBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/hinge/RigidBody3D"]
 mesh = SubResource("BoxMesh_vrqkc")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 0.791074, -0.61172, 0, 0.61172, 0.791074, 0, 0.0338649, 0.963092)
+use_collision = true
+size = Vector3(0.99707, 0.180664, 1.29382)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01062, 0)
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="StaticBody3D2/CSGBox3D2"]
+operation = 2
+size = Vector3(0.53418, 1.17285, 1.12988)
+
+[node name="sliding_door" parent="." instance=ExtResource("13_x4pok")]
+transform = Transform3D(-4.37114e-08, 4.04332e-11, 1, 0.000925004, 1, 0, -1, 0.000925004, -4.37114e-08, 0.990067, 0.262495, -0.798387)
+
+[node name="plug5" parent="." instance=ExtResource("12_72u27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.36676, 0.0248717, 0.0564559)
+charge_mode = 1
+base_power = 5.0
+indicator_color = Color(1, 1, 0, 1)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="plug5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.508217, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="plug5/StaticBody3D"]
+shape = SubResource("BoxShape3D_kpjl5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="plug5/StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_i0k3q")
 
 [node name="plug4" parent="." instance=ExtResource("12_72u27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.711107, 0.0248717, 1.29311)
-base_power = 2.0
+base_power = 15.0
+indicator_enabled = false
 idle_drain = -0.67

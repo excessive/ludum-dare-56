@@ -5,13 +5,14 @@ var a: CableSocket
 var b: CableSocket
 
 var label := Label3D.new()
+var rope := Rope3D.new()
 
 func _init(_a: CableSocket, _b: CableSocket):
 	a = _a
 	b = _b
 	assert(is_instance_valid(a))
 	assert(is_instance_valid(b))
-	print("%s -> %s" % [a.name, b.name])
+	#print("%s -> %s" % [a.name, b.name])
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.no_depth_test = true
 
@@ -72,3 +73,13 @@ func _process(_delta: float) -> void:
 
 	ExDD.draw_line_3d(a.global_position, b.global_position, Color.GREEN_YELLOW)
 	label.global_position = (a.global_position + b.global_position) / 2
+
+	if not is_ancestor_of(rope):
+		add_child(rope)
+	rope.attach_end_to = b.get_path()
+	rope.global_position = a.global_position
+	rope.rope_length = a.global_position.distance_to(b.global_position) * 0.5
+	rope.stiffness = 0.9
+	rope.iterations = 3
+	rope.apply_collision = false
+	rope.rope_width = 0.025

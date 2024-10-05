@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdk2ygfx67ji0"]
+
+[ext_resource type="PackedScene" uid="uid://c0wxk1faqipeb" path="res://addons/exmoe_tools/ui/splash_exmoe.tscn" id="1_b3apb"]
+
+[node name="Splash" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="splash_exmoe" parent="." instance=ExtResource("1_b3apb")]
+layout_mode = 1
+next_scene_path = "res://main_menu.tscn"

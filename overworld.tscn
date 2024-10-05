@@ -1,0 +1,136 @@
+[gd_scene load_steps=22 format=3 uid="uid://bmyahiyh3x7j4"]
+
+[ext_resource type="Script" path="res://stage_area.gd" id="1_l6n6m"]
+[ext_resource type="PackedScene" uid="uid://b0jwplxuwswa1" path="res://hud.tscn" id="2_vg55a"]
+[ext_resource type="Environment" uid="uid://bu60iui8ki4vr" path="res://materials/env.tres" id="3_ecfvj"]
+[ext_resource type="CameraAttributesPractical" uid="uid://ukpnmx37sm8c" path="res://materials/cam.tres" id="4_yy4bk"]
+[ext_resource type="PackedScene" uid="uid://dvc72ad3xv8sf" path="res://character.tscn" id="5_7xb50"]
+[ext_resource type="Script" path="res://remote_send.gd" id="6_ndvax"]
+[ext_resource type="Texture2D" uid="uid://ctlxpjrl6lam2" path="res://icon.svg" id="7_qkfsk"]
+[ext_resource type="PackedScene" uid="uid://chouijdrvq2ba" path="res://queue_lose.tscn" id="9_kn5q5"]
+[ext_resource type="PackedScene" uid="uid://dcuuj138lbykm" path="res://loss.tscn" id="10_brf08"]
+[ext_resource type="PackedScene" uid="uid://bdbx7tru3nnk2" path="res://queue_win.tscn" id="11_mwr2v"]
+[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://cable_socket.tscn" id="12_72u27"]
+[ext_resource type="PackedScene" uid="uid://d0kxh5ogv55c7" path="res://victory.tscn" id="12_hogso"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ycdg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0mnn4"]
+size = Vector3(500, 0.5, 500)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbjay"]
+albedo_color = Color(0.482973, 0.482973, 0.482973, 1)
+albedo_texture = ExtResource("7_qkfsk")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_dl2mr"]
+material = SubResource("StandardMaterial3D_qbjay")
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u4ofv"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_crbhq"]
+
+[sub_resource type="GDScript" id="GDScript_45dnf"]
+script/source = "extends HingeJoint3D
+
+@export var plug: CableSocket
+
+func _physics_process(delta: float) -> void:
+	var v: float = plug.power if plug else 0.0
+	set(\"motor/enable\", v > 0)
+	set(\"motor/target_velocity\", move_toward(get(\"motor/target_velocity\"), v * 10, 10 * delta))
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mygbb"]
+size = Vector3(1, 1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vrqkc"]
+size = Vector3(1, 1, 0.1)
+
+[node name="stage_area" type="Area3D"]
+monitorable = false
+script = ExtResource("1_l6n6m")
+size = Vector3(100, 25, 100)
+leave_scene = "res://overworld.tscn"
+
+[node name="hud" parent="." instance=ExtResource("2_vg55a")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.672935, 0.739702, 0, -0.739702, 0.672935, 0, 5, 4.5)
+environment = ExtResource("3_ecfvj")
+attributes = ExtResource("4_yy4bk")
+current = true
+fov = 30.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.318066, 0.948069, 0, -0.948069, 0.318066, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("5_7xb50")]
+
+[node name="Node" type="Node" parent="CharacterBody3D"]
+script = ExtResource("6_ndvax")
+source_node = NodePath("..")
+source_property = "global_position"
+destination_node = NodePath("../../hud")
+destination_property = "player_position"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_4ycdg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_0mnn4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_dl2mr")
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="."]
+resources = [PackedStringArray("loss", "queue_lose", "queue_win", "victory"), [ExtResource("10_brf08"), ExtResource("9_kn5q5"), ExtResource("11_mwr2v"), ExtResource("12_hogso")]]
+
+[node name="plug" parent="." instance=ExtResource("12_72u27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.213582, 0.0248717, 2.65201)
+charge_mode = 1
+base_power = 5.0
+
+[node name="plug2" parent="." instance=ExtResource("12_72u27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.68245, 0.0248717, 2.65201)
+charge_mode = 2
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25703, 0.0248717, 1.29311)
+
+[node name="plug3" parent="StaticBody3D2" instance=ExtResource("12_72u27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.496676, 0, 0)
+base_power = 5.0
+idle_drain = 0.75
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_u4ofv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+mesh = SubResource("BoxMesh_crbhq")
+skeleton = NodePath("../../StaticBody3D2")
+
+[node name="SliderJoint3D" type="HingeJoint3D" parent="StaticBody3D2" node_paths=PackedStringArray("plug")]
+transform = Transform3D(1.91069e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, 0, 0.585695, 0)
+node_a = NodePath("..")
+node_b = NodePath("RigidBody3D")
+script = SubResource("GDScript_45dnf")
+plug = NodePath("../plug3")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="StaticBody3D2/SliderJoint3D"]
+transform = Transform3D(-4.37114e-08, 4.37114e-08, -1, -4.37114e-08, 1, 4.37114e-08, 1, 4.37114e-08, -4.37114e-08, 0, 0, 0.537446)
+can_sleep = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/SliderJoint3D/RigidBody3D"]
+shape = SubResource("BoxShape3D_mygbb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/SliderJoint3D/RigidBody3D"]
+mesh = SubResource("BoxMesh_vrqkc")
+
+[node name="plug4" parent="." instance=ExtResource("12_72u27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.711107, 0.0248717, 1.29311)
+base_power = 2.0
+idle_drain = -0.67

@@ -1,0 +1,103 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0jwplxuwswa1"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_v3bj3"]
+[ext_resource type="Script" path="res://remote_send.gd" id="2_e2rrg"]
+
+[sub_resource type="GDScript" id="GDScript_d7l8y"]
+script/source = "extends ColorRect
+
+func _ready() -> void:
+	process_mode = PROCESS_MODE_ALWAYS
+
+func _process(delta: float) -> void:
+	var a := 0.0
+	if get_tree().paused:
+		a = 1.0
+
+	self_modulate.a = lerpf(self_modulate.a, a, 1.0 - exp(-10.0 * delta))
+	visible = self_modulate.a > 0.004
+"
+
+[sub_resource type="GDScript" id="GDScript_hk6o2"]
+script/source = "extends Label
+
+var player_position: Vector3
+
+func _process(_delta: float) -> void:
+	text = str(player_position)
+"
+
+[sub_resource type="GDScript" id="GDScript_4jwog"]
+script/source = "extends Button
+
+@export_file(\"*.tscn\") var win_screen: String
+
+func _ready() -> void:
+	pressed.connect(func():
+		disabled = true
+		ExTransition.auto_transition_threaded(win_screen))
+"
+
+[node name="hud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_v3bj3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0.576471)
+script = SubResource("GDScript_d7l8y")
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 2
+offset_left = 961.0
+offset_top = 67.0
+offset_right = 1238.0
+offset_bottom = 90.0
+pivot_offset = Vector2(33, 11)
+script = SubResource("GDScript_hk6o2")
+
+[node name="RemoteSend" type="Node" parent="Label3"]
+script = ExtResource("2_e2rrg")
+source_node = NodePath("../..")
+source_property = "player_position"
+destination_node = NodePath("..")
+destination_property = "player_position"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -297.0
+offset_bottom = 61.0
+grow_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "insert game here"
+script = SubResource("GDScript_4jwog")
+win_screen = "res://victory.tscn"
+
+[node name="Label2" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "oh no
+"
+script = SubResource("GDScript_4jwog")
+win_screen = "res://loss.tscn"

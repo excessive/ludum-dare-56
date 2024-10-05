@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://chouijdrvq2ba"]
+
+[sub_resource type="GDScript" id="GDScript_2m48d"]
+script/source = "extends Node
+
+@export_file(\"*.tscn\") var load_scene: String
+var _transitioning := false
+
+func _ready() -> void:
+	if not _transitioning and load_scene:
+		ExTransition.auto_transition_threaded(load_scene)
+		_transitioning = true
+"
+
+[node name="lose" type="Node"]
+script = SubResource("GDScript_2m48d")
+load_scene = "res://loss.tscn"

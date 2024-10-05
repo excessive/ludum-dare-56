@@ -1,6 +1,10 @@
-[gd_resource type="Theme" format=3 uid="uid://ddc03kd1hbemx"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ddc03kd1hbemx"]
+
+[ext_resource type="FontFile" uid="uid://dfpn31lgavm1v" path="res://addons/exmoe_tools/ui/fonts/Yanone_Kaffeesatz/YanoneKaffeesatz-Medium.ttf" id="1_1uwiw"]
 
 [resource]
+default_font = ExtResource("1_1uwiw")
+default_font_size = 24
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
 MarginContainer/constants/margin_right = 10

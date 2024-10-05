@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b5wafvtaaihlw"]
+
+[ext_resource type="FontFile" uid="uid://ir58tc8kwot7" path="res://addons/exmoe_tools/ui/fonts/Hack-Regular.ttf" id="1_ryq1j"]
+
+[resource]
+default_font = ExtResource("1_ryq1j")
+default_font_size = 12
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10

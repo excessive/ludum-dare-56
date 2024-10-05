@@ -1,6 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://cx8s8k4uunybd"]
+[gd_scene load_steps=3 format=3 uid="uid://cx8s8k4uunybd"]
 
-[ext_resource type="Texture2D" uid="uid://ctlxpjrl6lam2" path="res://icon.svg" id="1_fw2jo"]
+[sub_resource type="GDScript" id="GDScript_fr82b"]
+script/source = "extends Button
+
+@export_file(\"*.tscn\") var game_scene: String
+
+func _ready() -> void:
+	grab_click_focus()
+	grab_focus()
+	pressed.connect(func():
+		disabled = true
+		ExTransition.auto_transition_threaded(game_scene))
+"
+
+[sub_resource type="GDScript" id="GDScript_o6aef"]
+script/source = "extends Button
+
+func _ready() -> void:
+	pressed.connect(func():
+		get_tree().auto_accept_quit = true
+		get_tree().quit(0))
+"
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -35,14 +55,18 @@ alignment = 1
 [node name="play" type="Button" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "play"
+script = SubResource("GDScript_fr82b")
+game_scene = "res://overworld.tscn"
 
 [node name="options" type="Button" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "options"
 
 [node name="quit" type="Button" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "quit"
+script = SubResource("GDScript_o6aef")
 
 [node name="PanelContainer2" type="PanelContainer" parent="AspectRatioContainer/HBoxContainer"]
 layout_mode = 2
@@ -60,21 +84,16 @@ layout_mode = 2
 bbcode_enabled = true
 text = "[b]credits[/b]
 i have made game
+izu has been helpful
 
 [b]todo list so i can't ignore it[/b]
 [ul]
  everything
  also everything
+ figure out what the game actually is
 [/ul]
 
 [b]also notes[/b]
-aaaaaaaaaaaa"
+aaaaaaaaaaaa
+it is currently unwinnable just because there is no win trigger"
 fit_content = true
-
-[node name="Icon" type="Sprite2D" parent="AspectRatioContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
-position = Vector2(97.32, 496)
-texture = ExtResource("1_fw2jo")
-
-[node name="PanelContainer3" type="PanelContainer" parent="AspectRatioContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3

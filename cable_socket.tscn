@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bm2num3cbkjcf"]
+
+[ext_resource type="Script" path="res://cable_socket.gd" id="1_yyn2a"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_y8d6c"]
+radius = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_b2c1h"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="plug" type="Area3D"]
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+script = ExtResource("1_yyn2a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_y8d6c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_b2c1h")

@@ -16,7 +16,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ycdg"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_0mnn4"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_c1665"]
 size = Vector3(500, 0.5, 500)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbjay"]
@@ -25,13 +25,13 @@ albedo_texture = ExtResource("7_qkfsk")
 uv1_triplanar = true
 texture_filter = 5
 
-[sub_resource type="BoxMesh" id="BoxMesh_dl2mr"]
+[sub_resource type="BoxMesh" id="BoxMesh_w87c7"]
 material = SubResource("StandardMaterial3D_qbjay")
 size = Vector3(100, 0.5, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u4ofv"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_7cw63"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_crbhq"]
+[sub_resource type="BoxMesh" id="BoxMesh_ro6ne"]
 
 [sub_resource type="GDScript" id="GDScript_45dnf"]
 script/source = "extends HingeJoint3D
@@ -47,16 +47,16 @@ func _physics_process(delta: float) -> void:
 	set(\"angular_limit/upper\", move_toward(get(\"angular_limit/upper\"), v, 10 * delta))
 "
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_mygbb"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ucye8"]
 margin = 0.02
 size = Vector3(0.1, 1, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_vrqkc"]
+[sub_resource type="BoxMesh" id="BoxMesh_0yoic"]
 size = Vector3(0.1, 1, 0.5)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_kpjl5"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_otq1v"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_i0k3q"]
+[sub_resource type="BoxMesh" id="BoxMesh_ewnp1"]
 
 [node name="stage_area" type="Area3D"]
 monitorable = false
@@ -91,10 +91,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 physics_material_override = SubResource("PhysicsMaterial_4ycdg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_0mnn4")
+shape = SubResource("BoxShape3D_c1665")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("BoxMesh_dl2mr")
+mesh = SubResource("BoxMesh_w87c7")
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="."]
 resources = [PackedStringArray("loss", "queue_lose", "queue_win", "victory"), [ExtResource("10_brf08"), ExtResource("9_kn5q5"), ExtResource("11_mwr2v"), ExtResource("12_hogso")]]
@@ -119,10 +119,10 @@ base_power = 5.0
 idle_drain = 0.75
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-shape = SubResource("BoxShape3D_u4ofv")
+shape = SubResource("BoxShape3D_7cw63")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
-mesh = SubResource("BoxMesh_crbhq")
+mesh = SubResource("BoxMesh_ro6ne")
 skeleton = NodePath("../../StaticBody3D2")
 
 [node name="hinge" type="HingeJoint3D" parent="StaticBody3D2" node_paths=PackedStringArray("plug")]
@@ -139,10 +139,10 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0571
 can_sleep = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/hinge/RigidBody3D"]
-shape = SubResource("BoxShape3D_mygbb")
+shape = SubResource("BoxShape3D_ucye8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/hinge/RigidBody3D"]
-mesh = SubResource("BoxMesh_vrqkc")
+mesh = SubResource("BoxMesh_0yoic")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 0.791074, -0.61172, 0, 0.61172, 0.791074, 0, 0.0338649, 0.963092)
@@ -170,10 +170,10 @@ indicator_color = Color(1, 1, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.508217, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plug5/StaticBody3D"]
-shape = SubResource("BoxShape3D_kpjl5")
+shape = SubResource("BoxShape3D_otq1v")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="plug5/StaticBody3D/CollisionShape3D"]
-mesh = SubResource("BoxMesh_i0k3q")
+mesh = SubResource("BoxMesh_ewnp1")
 
 [node name="plug4" parent="." instance=ExtResource("12_72u27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.711107, 0.0248717, 1.29311)

@@ -1,0 +1,90 @@
+[gd_scene load_steps=7 format=3 uid="uid://tbjqfdssj58b"]
+
+[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://cable_socket.tscn" id="1_um2cy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7cw63"]
+margin = 0.02
+size = Vector3(0.2, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ro6ne"]
+size = Vector3(0.2, 1, 1)
+
+[sub_resource type="GDScript" id="GDScript_45dnf"]
+script/source = "extends HingeJoint3D
+
+@export var plug: CableSocket
+@export var max_power := 1.0
+
+func _physics_process(delta: float) -> void:
+	var v: float = clampf(plug.power / max_power, 0, 1) if plug else 0.0
+	v *= -PI/2
+	set(\"angular_limit/enable\", true)
+	set(\"angular_limit/lower\", move_toward(get(\"angular_limit/lower\"), v, 10 * delta))
+	set(\"angular_limit/upper\", move_toward(get(\"angular_limit/upper\"), v, 10 * delta))
+"
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wco0r"]
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.5
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ucye8"]
+margin = 0.01
+size = Vector3(0.1, 0.99, 0.5)
+
+[node name="door" type="AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="plug3" parent="." instance=ExtResource("1_um2cy")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.392265, -0.0727525, 0.516721)
+base_power = 5.0
+idle_drain = 0.75
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 0)
+shape = SubResource("BoxShape3D_7cw63")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0, 0)
+mesh = SubResource("BoxMesh_ro6ne")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0, 0)
+shape = SubResource("BoxShape3D_7cw63")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0, 0)
+mesh = SubResource("BoxMesh_ro6ne")
+
+[node name="hinge" type="HingeJoint3D" parent="." node_paths=PackedStringArray("plug")]
+transform = Transform3D(1.91069e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, -0.262, -0.5, 0.281)
+node_a = NodePath("..")
+node_b = NodePath("RigidBody3D")
+exclude_nodes_from_collision = false
+script = SubResource("GDScript_45dnf")
+plug = NodePath("../plug3")
+max_power = 5.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="hinge"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.495)
+mesh = SubResource("CylinderMesh_wco0r")
+skeleton = NodePath("")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="hinge"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.057, 0.253, 0.505)
+can_sleep = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hinge/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
+shape = SubResource("BoxShape3D_ucye8")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="hinge/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00999999, 0)
+size = Vector3(0.1, 0.99, 0.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="hinge/RigidBody3D/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0817779, -0.0024015, 0)
+operation = 2
+size = Vector3(0.135028, 0.93573, 0.449219)

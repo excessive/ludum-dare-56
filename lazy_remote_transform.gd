@@ -12,6 +12,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return warnings
 
 func _physics_process(delta: float) -> void:
+	if not visible:
+		return
 	var n := get_node_or_null(remote_path)
 	if not n or n is not Node3D:
 		return

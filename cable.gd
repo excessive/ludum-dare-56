@@ -6,18 +6,22 @@ var b: CableSocket
 
 var label := Label3D.new()
 var rope := Rope3D.new()
+var locked := false
+var show_label := false
 
-func _init(_a: CableSocket, _b: CableSocket):
+func _init(_a: CableSocket, _b: CableSocket, _locked := false):
 	a = _a
 	b = _b
+	locked = _locked
 	assert(is_instance_valid(a))
 	assert(is_instance_valid(b))
-	#print("%s -> %s" % [a.name, b.name])
+	rope.default_material = preload("res://addons/rope/cable_material.tres")
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.no_depth_test = true
 
 func _ready() -> void:
-	add_child(label)
+	if show_label:
+		add_child(label)
 
 func cable_connected() -> bool:
 	if a and not is_instance_valid(a):
@@ -58,21 +62,28 @@ func _physics_process(delta: float) -> void:
 		sb = tmp
 		pressure_diff = -pressure_diff
 
-	#var want := sa.power * pressure_diff * 0.5
 	var want := (1.0 + sa.power) * pressure_diff * delta
 	var got := sa._demand(want)
 	var rem := sb._supply(got)
 	sa._supply(rem) # b filled, return remainder
 	label.text = "%0.2fv" % [(sa.power + sb.power) / 2]
-	#print("%2.2f <-> %2.2f" % [sa.power, sb.power])
 
 func _process(_delta: float) -> void:
 	if not cable_connected():
 		queue_free()
 		return
 
-	ExDD.draw_line_3d(a.global_position, b.global_position, Color.GREEN_YELLOW)
-	label.global_position = (a.global_position + b.global_position) / 2
+	if not locked:
+		ExDD.draw_line_3d(a.global_position, b.global_position, Color.GREEN_YELLOW)
+	
+	if is_ancestor_of(label):
+		label.global_position = (a.global_position + b.global_position) / 2
+
+	if locked:
+		if rope:
+			rope.queue_free()
+			rope = null
+		return
 
 	if not is_ancestor_of(rope):
 		add_child(rope)

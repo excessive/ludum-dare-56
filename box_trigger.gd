@@ -11,6 +11,8 @@ class_name BoxTrigger
 @export var debug_color := Color(Color.BLUE, 0.33)
 @export var spawn: PackedScene
 @export var spawn_location: Node3D
+@export var all_characters := false
+
 var _collider := CollisionShape3D.new()
 var _vis: MeshInstance3D
 
@@ -40,6 +42,22 @@ func _ready() -> void:
 func _on_enter(body: Node3D):
 	if not spawn or not spawn.can_instantiate():
 		return
+
+	if all_characters:
+		var found := 0
+		var bodies := get_overlapping_bodies()
+		if body is Character and not bodies.has(body):
+			bodies.push_back(body)
+		for path in Character.characters:
+			var node = get_node_or_null(path)
+			if not node or not bodies.has(node):
+				break
+			found += 1
+		var n := Character.characters.size()
+		Console.print_line("%d/%d finished" % [ found, n ])
+		if found < n:
+			return
+
 	if body is CharacterBody3D:
 		var obj := spawn.instantiate()
 		add_child(obj)

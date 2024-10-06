@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://dga85xexl35hh"]
+
+[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://cable_socket.tscn" id="1_p23g2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ohcav"]
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bh5gu"]
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="GDScript" id="GDScript_b4l6q"]
+script/source = "extends OmniLight3D
+
+func _ready() -> void:
+	visible = false
+
+func _process(delta: float) -> void:
+	var target := clampf(get_parent().get_overlapping_bodies().size(), 0, 1)
+	light_energy = move_toward(light_energy, target, delta)
+	%plug.power = move_toward(%plug.power, target * %plug.base_power, 10 * delta)
+	visible = light_energy > 0.001
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lryaw"]
+
+[node name="detector" type="AnimatableBody3D"]
+
+[node name="plug" parent="." instance=ExtResource("1_p23g2")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.147692, -0.486778)
+base_power = 5.0
+idle_drain = 0.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ohcav")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_bh5gu")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="light" type="OmniLight3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0220864, 0)
+light_color = Color(0.976471, 0.952941, 0.0431373, 1)
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 10.0
+distance_fade_shadow = 5.0
+distance_fade_length = 5.0
+omni_range = 1.0
+omni_shadow_mode = 0
+script = SubResource("GDScript_b4l6q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_lryaw")

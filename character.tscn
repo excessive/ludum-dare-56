@@ -16,10 +16,12 @@ radius = 0.25
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("1_f1p2t")
 
 [node name="cam_tracker" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.672935, 0.739702, 0, -0.739702, 0.672935, 0, 4.75, 4.5)
+transform = Transform3D(1, 0, 0, 0, 0.595412, 0.803421, 0, -0.803421, 0.595412, 0, 4.7976, 3.43184)
 script = ExtResource("2_v6ssg")
 position_speed = 5.0
 rotation_speed = 5.0

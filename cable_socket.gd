@@ -12,6 +12,7 @@ enum SocketMode {
 @export var indicator_enabled: bool = true
 @export var indicator_color: Color = Color.GREEN
 @export var indicator_power: float = 5.0
+@export var show_label: bool = false
 
 @export_range(-1, 1, 0.01, "or_greater") var idle_drain := 0.0
 var label := Label3D.new()
@@ -29,6 +30,9 @@ func _ready() -> void:
 func cable_connected() -> bool:
 	return _wire and is_instance_valid(_wire)
 
+func cable_locked() -> bool:
+	return cable_connected() and _wire.locked
+
 func check_other_socket():
 	if cable_connected():
 		if _wire.a == self:
@@ -38,6 +42,8 @@ func check_other_socket():
 	return null
 
 func unplug():
+	if cable_locked():
+		return
 	if cable_connected():
 		_wire.queue_free()
 	_wire = null
@@ -69,10 +75,9 @@ func _physics_process(delta: float) -> void:
 	if cable_connected():
 		if is_ancestor_of(label):
 			remove_child(label)
-		#if idle_drain > 0:
 		return
 	else:
-		if not is_ancestor_of(label):
+		if not is_ancestor_of(label) and show_label:
 			add_child(label)
 	if maxf(0, absf(idle_drain) - 0.01) <= 0.0:
 		label.text = "%0.2fv" % [power]

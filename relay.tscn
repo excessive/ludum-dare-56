@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://crd17u3ryjeuf"]
+
+[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://cable_socket.tscn" id="1_q7bmk"]
+[ext_resource type="Script" path="res://cable_node.gd" id="2_p1a3k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jidff"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ews05"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="GDScript" id="GDScript_1aroq"]
+script/source = "extends OmniLight3D
+
+@export var max_power := 1.0
+
+func _ready() -> void:
+	visible = false
+
+func _process(delta: float) -> void:
+	var target := pow(clampf(get_parent().power / max_power, 0, 1), 2.0)
+	light_energy = move_toward(light_energy, target, delta)
+	visible = light_energy > 0.001
+"
+
+[node name="relay" type="Node3D"]
+
+[node name="plug" parent="." instance=ExtResource("1_q7bmk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0, 0)
+indicator_color = Color(1, 1, 0, 1)
+idle_drain = 0.5
+
+[node name="plug2" parent="." instance=ExtResource("1_q7bmk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0)
+indicator_color = Color(1, 1, 0, 1)
+idle_drain = 0.5
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_jidff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_ews05")
+
+[node name="relay" type="Node3D" parent="." node_paths=PackedStringArray("a", "b")]
+script = ExtResource("2_p1a3k")
+a = NodePath("../plug")
+b = NodePath("../plug2")
+hidden = true
+
+[node name="light" type="OmniLight3D" parent="relay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.158473, 0)
+light_color = Color(0.24, 0.328667, 1, 1)
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 10.0
+distance_fade_shadow = 5.0
+distance_fade_length = 5.0
+omni_range = 0.5
+omni_shadow_mode = 0
+script = SubResource("GDScript_1aroq")

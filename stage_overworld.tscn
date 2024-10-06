@@ -1,0 +1,90 @@
+[gd_scene load_steps=15 format=3 uid="uid://dx1ww3fovu8ui"]
+
+[ext_resource type="PackedScene" uid="uid://85bussvsg4wv" path="res://stage_base.tscn" id="1_el18k"]
+[ext_resource type="Texture2D" uid="uid://xn7h4m0c04vh" path="res://addons/rope/textures/dark.png" id="2_67x0s"]
+[ext_resource type="PackedScene" uid="uid://bhx7xy04wjduy" path="res://minisil.tscn" id="3_5vquv"]
+[ext_resource type="Script" path="res://remote_send.gd" id="4_tn7nl"]
+[ext_resource type="PackedScene" uid="uid://basixwkciwjv4" path="res://albert.tscn" id="5_qt84o"]
+[ext_resource type="PackedScene" uid="uid://tbjqfdssj58b" path="res://door.tscn" id="6_fb221"]
+[ext_resource type="PackedScene" uid="uid://bbfksrj17d8sy" path="res://sliding_door.tscn" id="7_7qlif"]
+[ext_resource type="PackedScene" uid="uid://v0ogt1mn3guq" path="res://battery.tscn" id="8_4pcrn"]
+[ext_resource type="PackedScene" uid="uid://dga85xexl35hh" path="res://detector.tscn" id="9_v60o7"]
+[ext_resource type="PackedScene" uid="uid://bob462s3xnw4v" path="res://stage_end.tscn" id="10_5sorw"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p0ko4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_waanx"]
+size = Vector3(10, 0.5, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbjay"]
+albedo_color = Color(0.482973, 0.482973, 0.482973, 1)
+albedo_texture = ExtResource("2_67x0s")
+uv1_triplanar = true
+texture_filter = 5
+
+[sub_resource type="BoxMesh" id="BoxMesh_5mv28"]
+material = SubResource("StandardMaterial3D_qbjay")
+size = Vector3(10, 0.5, 10)
+
+[node name="stage_area" instance=ExtResource("1_el18k")]
+leave_scene = "res://stage_overworld.tscn"
+
+[node name="floor" type="StaticBody3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_p0ko4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor" index="0"]
+shape = SubResource("BoxShape3D_waanx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor" index="1"]
+mesh = SubResource("BoxMesh_5mv28")
+
+[node name="minisil" parent="." index="7" instance=ExtResource("3_5vquv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.566197, 0, -0.814509)
+
+[node name="Node" type="Node" parent="minisil" index="5"]
+script = ExtResource("4_tn7nl")
+source_property = "global_position"
+destination_node = NodePath("../../hud")
+destination_property = "player1_position"
+
+[node name="albert" parent="." index="8" instance=ExtResource("5_qt84o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.50681, 0, -1.3782)
+
+[node name="Node" type="Node" parent="albert" index="5"]
+script = ExtResource("4_tn7nl")
+source_property = "global_position"
+destination_node = NodePath("../../hud")
+destination_property = "player2_position"
+
+[node name="StaticBody3D2" parent="." index="9" instance=ExtResource("6_fb221")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -0.472756, 0.25, -0.699034)
+
+[node name="sliding_door" parent="." index="10" instance=ExtResource("7_7qlif")]
+transform = Transform3D(-4.37114e-08, 4.04332e-11, 1, 0.000925004, 1, 0, -1, 0.000925004, -4.37114e-08, 1.16645, 0.262495, -0.798387)
+
+[node name="battery" parent="." index="11" instance=ExtResource("8_4pcrn")]
+transform = Transform3D(0.981687, 0, 0.1905, 0, 1, 0, -0.1905, 0, 0.981687, 0.607464, -0.125, -2.04644)
+
+[node name="detector" parent="." index="12" instance=ExtResource("9_v60o7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.226793, -0.25, -1.8768)
+
+[node name="stage_end" parent="." index="13" instance=ExtResource("10_5sorw")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.50907, 0.0320768, -0.863383)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." index="14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0571289, 0.19458, -1.40466)
+size = Vector3(1.91504, 1.38916, 2.32837)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0142212, 0.19458, 0.00305057)
+operation = 2
+size = Vector3(1.69812, 1.38916, 2.12463)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D/CSGBox3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00585938, -0.0614014, 0.676383)
+size = Vector3(2.62134, 1.90112, 0.807938)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D/CSGBox3D/CSGBox3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.883789, -0.0614014, -0.964813)
+size = Vector3(0.865479, 1.90112, 0.9305)

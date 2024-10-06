@@ -20,7 +20,10 @@ collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_f1p2t")
 
-[node name="cam_tracker" type="Node3D" parent="."]
+[node name="cam_pivot" type="Node3D" parent="."]
+
+[node name="cam_tracker" type="Node3D" parent="cam_pivot"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.595412, 0.803421, 0, -0.803421, 0.595412, 0, 4.7976, 3.43184)
 script = ExtResource("2_v6ssg")
 position_speed = 5.0

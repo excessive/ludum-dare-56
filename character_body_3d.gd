@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if not _active:
 		input_dir *= 0
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).limit_length() * move_speed
+	var direction := (transform.basis * ($cam_pivot as Node3D).basis * Vector3(input_dir.x, 0, input_dir.y)).limit_length() * move_speed
 	direction.y = velocity.y
 	velocity = velocity.move_toward(direction, accel_speed * delta)
 
@@ -39,13 +39,18 @@ func _physics_process(delta: float) -> void:
 	if not _try_connect(delta):
 		_try_grab(delta)
 
+	if Input.is_action_just_pressed("view_cw"):
+		$cam_pivot.rotate_y(deg_to_rad(-90))
+
+	if Input.is_action_just_pressed("view_ccw"):
+		$cam_pivot.rotate_y(deg_to_rad(90))
+
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity -= get_gravity() * jump_height
 
 	if Input.is_action_just_pressed("switch"):
 		Character.active_character = Character.characters.pop_front()
 		Character.characters.push_back(Character.active_character)
-		print(Character.active_character, " ", Character.characters)
 
 func _try_grab(_delta: float):
 	if not can_grab:
@@ -98,6 +103,7 @@ func _update_nearest_plug():
 		var dist := area.global_position.distance_to(global_position)
 		if dist < closest_dist and is_instance_valid(area):
 			_nearest_plug = area
+			closest_dist = dist
 
 func _update_camera():
 	var vp := get_viewport()
@@ -106,8 +112,8 @@ func _update_camera():
 	var cam := vp.get_camera_3d()
 	if not cam:
 		return
-	$cam_tracker.visible = _active
-	$cam_tracker.remote_path = cam.get_path()
+	%cam_tracker.visible = _active
+	%cam_tracker.remote_path = cam.get_path()
 
 func _update_active():
 	var p := get_path()

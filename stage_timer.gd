@@ -1,4 +1,5 @@
 extends Node
+class_name StageTimer
 
 var game_time := 0.0
 @export var running := false

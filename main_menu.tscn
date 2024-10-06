@@ -56,7 +56,7 @@ alignment = 1
 layout_mode = 2
 text = "play"
 script = SubResource("GDScript_fr82b")
-game_scene = "res://overworld.tscn"
+game_scene = "res://stage_overworld.tscn"
 
 [node name="options" type="Button" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 visible = false
@@ -84,16 +84,20 @@ layout_mode = 2
 bbcode_enabled = true
 text = "[b]credits[/b]
 i have made game
-izu has been helpful
+izu has been helpful ty
 
 [b]todo list so i can't ignore it[/b]
 [ul]
- everything
+ models
+ hud stuff
+ levels
  also everything
- figure out what the game actually is
 [/ul]
 
 [b]also notes[/b]
-aaaaaaaaaaaa
-it is currently unwinnable just because there is no win trigger"
+
+there is only one level right now just to test the mechanics out
+
+controls are wasdgqe tab space escape and gamepad should work too
+"
 fit_content = true

@@ -23,8 +23,6 @@ func _init() -> void:
 	add_child(_collider)
 
 func _ready() -> void:
-	if find_child("stage_timer"):
-		$stage_timer.start()
 	if Engine.is_editor_hint():
 		_vis = MeshInstance3D.new()
 		var box := BoxMesh.new()
@@ -38,6 +36,10 @@ func _ready() -> void:
 		box.material = mat
 		_vis.mesh = box
 		add_child(_vis)
+	else:
+		var st := find_child("stage_timer")
+		if st and st is StageTimer:
+			st.start()
 
 	body_entered.connect(_on_enter)
 
@@ -59,8 +61,9 @@ func _on_enter(body: Node3D):
 		Console.print_line("%d/%d finished" % [ found, n ])
 		if found < n:
 			return
-		if find_child("stage_timer"):
-			Console.print_line("stage finished in %0.03fs" % [$stage_timer.stop()], true)
+		var st := find_child("stage_timer")
+		if st and st is StageTimer:
+			Console.print_line("stage finished in %0.03fs" % [st.stop()])
 
 	if body is CharacterBody3D:
 		var obj := spawn.instantiate()

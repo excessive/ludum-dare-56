@@ -34,6 +34,10 @@ window/size/viewport_height=720
 
 enabled=PackedStringArray("res://addons/console/plugin.cfg", "res://addons/exmoe_tools/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [gui]
 
 theme/custom="res://ui_theme.tres"

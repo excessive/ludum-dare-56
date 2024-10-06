@@ -27,12 +27,13 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.595412, 0.803421, 0, -0.803421, 0.595412, 0, 4.7976, 3.43184)
 script = ExtResource("2_v6ssg")
 position_speed = 5.0
-rotation_speed = 5.0
+rotation_speed = 10.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_bswdr")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="placeholder" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CapsuleMesh_716up")
 
 [node name="cable_grabber" type="Area3D" parent="."]
@@ -42,3 +43,11 @@ monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="cable_grabber"]
 shape = SubResource("SphereShape3D_1gmmy")
+
+[node name="body_pivot" type="Node3D" parent="."]
+
+[node name="body_tracker" type="Node3D" parent="body_pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+script = ExtResource("2_v6ssg")
+position_speed = 10.0
+rotation_speed = 5.0

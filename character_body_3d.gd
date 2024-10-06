@@ -33,6 +33,12 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+	var bias := Vector3.UP * 0.0001
+	if velocity and absf(velocity.normalized().dot(Vector3.UP)) < 0.99:
+		$body_pivot.look_at_from_position(global_position, global_position + velocity, -get_gravity() + bias)
+	else:
+		$body_pivot.look_at_from_position(global_position, global_position - $body_pivot.global_basis.z * Vector3(1, 0, 1), -get_gravity() + bias)
+
 	if not _active:
 		return
 

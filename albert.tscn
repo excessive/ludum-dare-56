@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://basixwkciwjv4"]
+[gd_scene load_steps=3 format=3 uid="uid://basixwkciwjv4"]
 
 [ext_resource type="PackedScene" uid="uid://dvc72ad3xv8sf" path="res://character.tscn" id="1_g1pea"]
+[ext_resource type="PackedScene" uid="uid://dmukdohj7bdb2" path="res://albert.glb" id="2_tqgqr"]
 
 [node name="albert" instance=ExtResource("1_g1pea")]
 jump_height = 0.33
@@ -12,3 +13,9 @@ pixel_size = 0.0025
 billboard = 1
 no_depth_test = true
 text = "albert"
+
+[node name="albert2" parent="." index="5" instance=ExtResource("2_tqgqr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+
+[node name="body_tracker" parent="body_pivot" index="0"]
+remote_path = NodePath("../../albert2")

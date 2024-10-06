@@ -9,6 +9,7 @@ move_speed = 4.0
 accel_speed = 7.0
 
 [node name="Label3D" type="Label3D" parent="." index="4"]
+visible = false
 pixel_size = 0.0025
 billboard = 1
 no_depth_test = true

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://basixwkciwjv4"]
+
+[ext_resource type="PackedScene" uid="uid://dvc72ad3xv8sf" path="res://character.tscn" id="1_g1pea"]
+
+[node name="albert" instance=ExtResource("1_g1pea")]
+jump_height = 0.33
+move_speed = 4.0
+accel_speed = 7.0
+
+[node name="Label3D" type="Label3D" parent="." index="4"]
+pixel_size = 0.0025
+billboard = 1
+no_depth_test = true
+text = "albert"

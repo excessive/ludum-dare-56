@@ -75,7 +75,6 @@ script = SubResource("GDScript_hk6o2")
 script = ExtResource("2_e2rrg")
 source_node = NodePath("../..")
 source_property = "player1_position"
-destination_node = NodePath("..")
 destination_property = "player_position"
 
 [node name="Label4" type="Label" parent="."]
@@ -94,7 +93,6 @@ script = SubResource("GDScript_hk6o2")
 script = ExtResource("2_e2rrg")
 source_node = NodePath("../..")
 source_property = "player2_position"
-destination_node = NodePath("..")
 destination_property = "player_position"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

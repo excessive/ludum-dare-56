@@ -9,6 +9,8 @@ class_name RemoteSend
 func _ready() -> void:
 	if not source_node:
 		source_node = get_path_to(get_parent())
+	if not destination_node:
+		destination_node = get_path_to(get_parent())
 
 func _process(_delta: float) -> void:
 	var a := get_node_or_null(source_node)

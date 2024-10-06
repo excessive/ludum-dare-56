@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://bmyahiyh3x7j4"]
+[gd_scene load_steps=26 format=3 uid="uid://bmyahiyh3x7j4"]
 
 [ext_resource type="Script" path="res://stage_area.gd" id="1_l6n6m"]
 [ext_resource type="PackedScene" uid="uid://b0jwplxuwswa1" path="res://hud.tscn" id="2_vg55a"]
 [ext_resource type="Environment" uid="uid://bu60iui8ki4vr" path="res://materials/env.tres" id="3_ecfvj"]
+[ext_resource type="PackedScene" uid="uid://bhx7xy04wjduy" path="res://minisil.tscn" id="3_ggs8k"]
 [ext_resource type="CameraAttributesPractical" uid="uid://ukpnmx37sm8c" path="res://materials/cam.tres" id="4_yy4bk"]
-[ext_resource type="PackedScene" uid="uid://dvc72ad3xv8sf" path="res://character.tscn" id="5_7xb50"]
+[ext_resource type="PackedScene" uid="uid://basixwkciwjv4" path="res://albert.tscn" id="5_t8bvo"]
 [ext_resource type="Script" path="res://remote_send.gd" id="6_ndvax"]
 [ext_resource type="Material" uid="uid://b7i0e8j2roabl" path="res://addons/rope/cable_material.tres" id="6_t2d3q"]
 [ext_resource type="Texture2D" uid="uid://xn7h4m0c04vh" path="res://addons/rope/textures/dark.png" id="7_ur4l6"]
@@ -19,12 +20,12 @@
 [ext_resource type="PackedScene" uid="uid://crd17u3ryjeuf" path="res://relay.tscn" id="14_70j1o"]
 [ext_resource type="PackedScene" uid="uid://v0ogt1mn3guq" path="res://battery.tscn" id="15_qegmm"]
 [ext_resource type="PackedScene" uid="uid://dga85xexl35hh" path="res://detector.tscn" id="16_1pmbq"]
-[ext_resource type="Script" path="res://box_trigger.gd" id="17_2le28"]
+[ext_resource type="PackedScene" uid="uid://bob462s3xnw4v" path="res://stage_end.tscn" id="18_e0j1c"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4ycdg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1665"]
-size = Vector3(500, 0.5, 500)
+size = Vector3(10, 0.5, 10)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbjay"]
 albedo_color = Color(0.482973, 0.482973, 0.482973, 1)
@@ -34,12 +35,12 @@ texture_filter = 5
 
 [sub_resource type="BoxMesh" id="BoxMesh_w87c7"]
 material = SubResource("StandardMaterial3D_qbjay")
-size = Vector3(100, 0.5, 100)
+size = Vector3(10, 0.5, 10)
 
 [node name="stage_area" type="Area3D"]
 monitorable = false
 script = ExtResource("1_l6n6m")
-size = Vector3(100, 25, 100)
+size = Vector3(10, 25, 10)
 leave_scene = "res://overworld.tscn"
 
 [node name="hud" parent="." instance=ExtResource("2_vg55a")]
@@ -48,51 +49,33 @@ leave_scene = "res://overworld.tscn"
 transform = Transform3D(1, 0, 0, 0, 0.318066, 0.948069, 0, -0.948069, 0.318066, 0, 0, 0)
 shadow_enabled = true
 
-[node name="m" parent="." instance=ExtResource("5_7xb50")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.98049, 0.25, 0.611634)
-can_connect = true
+[node name="floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+physics_material_override = SubResource("PhysicsMaterial_4ycdg")
 
-[node name="Node" type="Node" parent="m"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+shape = SubResource("BoxShape3D_c1665")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+mesh = SubResource("BoxMesh_w87c7")
+
+[node name="minisil" parent="." instance=ExtResource("3_ggs8k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.98049, 0, 0.611634)
+
+[node name="Node" type="Node" parent="minisil"]
 script = ExtResource("6_ndvax")
-source_node = NodePath("..")
 source_property = "global_position"
 destination_node = NodePath("../../hud")
 destination_property = "player1_position"
 
-[node name="Label3D" type="Label3D" parent="m"]
-pixel_size = 0.0025
-billboard = 1
-no_depth_test = true
-text = "minisil"
+[node name="albert" parent="." instance=ExtResource("5_t8bvo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.561795, 0, -2.38244)
 
-[node name="a" parent="." instance=ExtResource("5_7xb50")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.561795, 0.25, -2.38244)
-jump_height = 0.34
-move_speed = 3.0
-accel_speed = 7.0
-
-[node name="Node" type="Node" parent="a"]
+[node name="Node" type="Node" parent="albert"]
 script = ExtResource("6_ndvax")
-source_node = NodePath("..")
 source_property = "global_position"
 destination_node = NodePath("../../hud")
 destination_property = "player2_position"
-
-[node name="Label3D" type="Label3D" parent="a"]
-pixel_size = 0.0025
-billboard = 1
-no_depth_test = true
-text = "albert"
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-physics_material_override = SubResource("PhysicsMaterial_4ycdg")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_c1665")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("BoxMesh_w87c7")
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="."]
 resources = [PackedStringArray("cable_material", "loss", "queue_lose", "queue_win", "rope_material", "victory"), [ExtResource("6_t2d3q"), ExtResource("10_brf08"), ExtResource("9_kn5q5"), ExtResource("11_mwr2v"), ExtResource("10_fv004"), ExtResource("12_hogso")]]
@@ -118,25 +101,8 @@ transform = Transform3D(-0.802682, 0, 0.596407, 0, 1, 0, -0.596407, 0, -0.802682
 [node name="detector" parent="." instance=ExtResource("16_1pmbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10458, -0.25, -1.16254)
 
-[node name="BoxTrigger" type="Area3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.23858, 0, -0.714276)
-collision_layer = 4
-collision_mask = 4
-monitorable = false
-script = ExtResource("17_2le28")
-spawn = ExtResource("11_mwr2v")
-all_characters = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="BoxTrigger"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23999, 0)
-use_collision = true
-size = Vector3(2.13574, 1.02393, 2.21118)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="BoxTrigger/CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10437, 0.269836)
-operation = 2
-use_collision = true
-size = Vector3(1.22461, 1.29517, 1.67151)
+[node name="stage_end" parent="." instance=ExtResource("18_e0j1c")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.34356, 0.0320768, -0.71208)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 environment = ExtResource("3_ecfvj")

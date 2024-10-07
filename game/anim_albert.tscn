@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://brvg8sybibhso"]
+[gd_scene load_steps=3 format=3 uid="uid://brvg8sybibhso"]
 
 [ext_resource type="PackedScene" uid="uid://dmukdohj7bdb2" path="res://game/models/albert.glb" id="1_ibx34"]
+[ext_resource type="Script" path="res://game/anim_link.gd" id="2_n1o6x"]
 
 [node name="albert" instance=ExtResource("1_ibx34")]
+script = ExtResource("2_n1o6x")
 
 [node name="Skeleton3D" parent="Armature" index="0"]
 bones/3/rotation = Quaternion(0.745586, -0.101878, 0.647164, -0.122074)

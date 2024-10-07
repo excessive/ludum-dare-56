@@ -28,13 +28,19 @@ resources = [PackedStringArray("albert", "cable_material", "loss", "minisil", "q
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.318066, 0.948069, 0, -0.948069, 0.318066, 0, 0, 0)
+light_color = Color(0.9252, 0.91221, 0.907123, 1)
+light_energy = 1.1
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 current = true
-fov = 25.0
+fov = 20.0
 near = 0.01
 far = 1000.0
 
 [node name="hud" parent="." instance=ExtResource("10_0fn8s")]
 metadata/_edit_use_anchors_ = true
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+cull_mask = 1048570

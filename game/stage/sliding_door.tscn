@@ -56,6 +56,9 @@ slide = 0.75
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.96516, 0.298111, 2.18575e-16)
 physics_material_override = SubResource("PhysicsMaterial_ojnaf")
 can_sleep = false
+continuous_cd = true
+linear_damp = 1.0
+angular_damp = 1.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4/SliderJoint3D/RigidBody3D"]
 shape = SubResource("BoxShape3D_qivab")

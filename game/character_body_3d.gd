@@ -1,14 +1,18 @@
 extends CharacterBody3D
 class_name Character
 
+@export var avatar: AnimLink
+
 @export var can_connect := false
 @export var can_grab := true
 
 @export var jump_height := 0.25
 @export var move_speed := 2.0
-@export var accel_speed = 5.0
+@export var accel_speed := 5.0
+@export var rotation_base := 22.5
 
 const HOLD_TIME := 0.2
+const MAX_CABLE_LENGTH := 2.0
 
 # these are validated/pruned every frame
 var _nearest_plug: CableSocket
@@ -16,13 +20,61 @@ var _current_plug: CableSocket
 
 var _held_time := 0.0
 var _active := false
+var coins := 0
+@onready var max_coins := get_tree().get_nodes_in_group(&"collectible").size()
 
 static var active_character: NodePath
 static var characters: Array[NodePath] = []
 
+enum AnimState {
+	Idle,
+	Run,
+	Jump,
+	Grab
+}
+
+var _anim_state := AnimState.Idle
+
+func _try_play(anim: AnimationPlayer, anim_name: String, revert_to_idle := true):
+	if anim.has_animation(anim_name):
+		if anim.assigned_animation != anim_name:
+			anim.play(anim_name, 0.125)
+	elif revert_to_idle:
+		_anim_state = AnimState.Idle
+		_update_animation()
+
+func _update_animation():
+	if not avatar or not avatar.animation_player:
+		return
+
+	var anim := avatar.animation_player
+	match _anim_state:
+		AnimState.Idle:
+			_try_play(anim, "idle", false)
+		AnimState.Run:
+			_try_play(anim, "run")
+		AnimState.Jump:
+			_try_play(anim, "jump")
+		AnimState.Grab:
+			_try_play(anim, "grab")
+
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
+	if is_on_floor():
+		_anim_state = AnimState.Idle
+		if velocity.length() > 0.1:
+			_anim_state = AnimState.Run
+	else:
+		_anim_state = AnimState.Jump
 		velocity += get_gravity() * delta
+
+	for item: Node3D in $collectible_grabber.get_overlapping_areas():
+		if item.is_in_group(&"collectible"):
+			item.queue_free()
+			coins += 1
+			var total := get_tree().get_nodes_in_group(&"collectible").size()
+			Console.print_line("coin get (%d/%d)" % [coins, max_coins], true)
+			if coins >= max_coins:
+				Console.print_line("all coins collected!", true)
 
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if not _active:
@@ -31,8 +83,6 @@ func _physics_process(delta: float) -> void:
 	direction.y = velocity.y
 	velocity = velocity.move_toward(direction, accel_speed * delta)
 
-	move_and_slide()
-
 	var bias := Vector3.UP * 0.0001
 	if velocity.length() > 0.001 and absf(velocity.normalized().dot(Vector3.UP)) < 0.99:
 		$body_pivot.look_at_from_position(global_position, global_position + velocity, -get_gravity() + bias)
@@ -40,11 +90,14 @@ func _physics_process(delta: float) -> void:
 		$body_pivot.look_at_from_position(global_position, global_position - $body_pivot.global_basis.z * Vector3(1, 0, 1), -get_gravity() + bias)
 
 	if not _active:
+		move_and_slide()
+		_update_animation()
 		return
 
 	if not _try_connect(delta):
 		_try_grab(delta)
 
+	$cam_pivot.global_rotation_degrees.y = snappedf($cam_pivot.global_rotation_degrees.y - rotation_base, 90) + rotation_base
 	if Input.is_action_just_pressed("view_cw"):
 		$cam_pivot.rotate_y(deg_to_rad(-90))
 
@@ -52,11 +105,15 @@ func _physics_process(delta: float) -> void:
 		$cam_pivot.rotate_y(deg_to_rad(90))
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		_anim_state = AnimState.Jump
 		velocity -= get_gravity() * jump_height
 
 	if Input.is_action_just_pressed("switch"):
-		Character.active_character = Character.characters.pop_front()
-		Character.characters.push_back(Character.active_character)
+		Character.active_character = Character.characters.pop_back()
+		Character.characters.push_front(Character.active_character)
+
+	move_and_slide()
+	_update_animation()
 
 func _try_grab(_delta: float):
 	if not can_grab:
@@ -81,10 +138,14 @@ func _try_connect(delta: float) -> bool:
 		if _held_time <= HOLD_TIME:
 			_current_plug.unplug()
 		else:
-			_current_plug.unplug()
 			if _nearest_plug and not _nearest_plug.cable_locked():
-				_nearest_plug.unplug()
-				add_child(Cable.new(_nearest_plug, _current_plug))
+				var d := _nearest_plug.global_position.distance_to(_current_plug.global_position)
+				if d <= MAX_CABLE_LENGTH:
+					_current_plug.unplug()
+					_nearest_plug.unplug()
+					add_child(Cable.new(_nearest_plug, _current_plug))
+				else:
+					Console.print_line("cable too long, can't connect")
 		_held_time = 0
 		_current_plug = null
 		return true
@@ -138,4 +199,5 @@ func _process(_delta: float) -> void:
 	_update_camera()
 
 	if _current_plug:
-		ExDD.draw_line_3d(global_position, _current_plug.global_position, Color.REBECCA_PURPLE)
+		var d := global_position - _current_plug.global_position
+		ExDD.draw_line_3d(_current_plug.global_position, _current_plug.global_position + d.limit_length(MAX_CABLE_LENGTH), Color.REBECCA_PURPLE)

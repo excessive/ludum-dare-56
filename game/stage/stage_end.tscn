@@ -26,3 +26,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10437, 0.269836)
 operation = 2
 use_collision = true
 size = Vector3(1.22461, 1.29517, 1.67151)
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23903, 0)
+pixel_size = 0.0025
+billboard = 1
+text = "goal
+
+get everyone here!"

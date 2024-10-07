@@ -10,11 +10,13 @@ class_name BoxTrigger
 			_vis.mesh.size = size
 @export var debug_color := Color(Color.BLUE, 0.33)
 @export var spawn: PackedScene
+@export_file("*.tscn") var next_map: String = ""
 @export var spawn_location: Node3D
 @export var all_characters := false
 
 var _collider := CollisionShape3D.new()
 var _vis: MeshInstance3D
+var _transitioning := false
 
 func _init() -> void:
 	var box := BoxShape3D.new()
@@ -44,7 +46,7 @@ func _ready() -> void:
 	body_entered.connect(_on_enter)
 
 func _on_enter(body: Node3D):
-	if not spawn or not spawn.can_instantiate():
+	if (not spawn or not spawn.can_instantiate()) and not next_map:
 		return
 
 	if all_characters:
@@ -66,7 +68,12 @@ func _on_enter(body: Node3D):
 			Console.print_line("stage finished in %0.03fs" % [st.stop()])
 
 	if body is CharacterBody3D:
-		var obj := spawn.instantiate()
-		add_child(obj)
-		if is_instance_valid(spawn_location) and obj is Node3D:
-			obj.global_position = spawn_location.global_position
+		if spawn and spawn.can_instantiate():
+			var obj := spawn.instantiate()
+			add_child(obj)
+			if is_instance_valid(spawn_location) and obj is Node3D:
+				obj.global_position = spawn_location.global_position
+		else:
+			if not _transitioning and next_map:
+				ExTransition.auto_transition_threaded(next_map)
+				_transitioning = true

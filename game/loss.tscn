@@ -31,9 +31,7 @@ offset_right = 49.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "you have died
-
-not very neat"
+text = "you may want to try that again"
 horizontal_alignment = 1
 
 [node name="Timer" type="Timer" parent="."]

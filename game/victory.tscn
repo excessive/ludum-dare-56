@@ -33,7 +33,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "you have won
 
-neat"
+thank you for playing"
 horizontal_alignment = 1
 
 [node name="Timer" type="Timer" parent="."]

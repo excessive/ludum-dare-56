@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dx1ww3fovu8ui"]
+[gd_scene load_steps=15 format=3 uid="uid://dx1ww3fovu8ui"]
 
 [ext_resource type="PackedScene" uid="uid://85bussvsg4wv" path="res://game/stage_base.tscn" id="1_el18k"]
 [ext_resource type="Texture2D" uid="uid://d7cl0ugm54xa" path="res://game/materials/grass.png" id="2_lkntf"]
@@ -8,9 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://tbjqfdssj58b" path="res://game/stage/door.tscn" id="6_fb221"]
 [ext_resource type="PackedScene" uid="uid://bbfksrj17d8sy" path="res://game/stage/sliding_door.tscn" id="7_7qlif"]
 [ext_resource type="PackedScene" uid="uid://v0ogt1mn3guq" path="res://game/stage/battery.tscn" id="8_4pcrn"]
-[ext_resource type="PackedScene" uid="uid://dga85xexl35hh" path="res://game/stage/detector.tscn" id="9_v60o7"]
 [ext_resource type="PackedScene" uid="uid://bob462s3xnw4v" path="res://game/stage/stage_end.tscn" id="10_5sorw"]
-[ext_resource type="PackedScene" uid="uid://evp83ix5fas6" path="res://game/stage/elevator.tscn" id="11_4i2l6"]
 [ext_resource type="PackedScene" uid="uid://b6ofcs2rj7fon" path="res://game/stage/coin.tscn" id="12_kg1n1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p0ko4"]
@@ -51,7 +49,7 @@ destination_node = NodePath("../../hud")
 destination_property = "player1_position"
 
 [node name="albert" parent="." index="8" instance=ExtResource("5_qt84o")]
-transform = Transform3D(-0.922572, 0, -0.385826, 0, 1, 0, 0.385826, 0, -0.922572, -1.77992, 0.321837, -2.14268)
+transform = Transform3D(-0.922572, 0, -0.385826, 0, 1, 0, 0.385826, 0, -0.922572, -1.77992, 0, -2.14268)
 
 [node name="Node" type="Node" parent="albert" index="5"]
 script = ExtResource("4_tn7nl")
@@ -65,19 +63,15 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -0.47275
 [node name="sliding_door" parent="." index="10" instance=ExtResource("7_7qlif")]
 transform = Transform3D(-4.37114e-08, 4.04332e-11, 1, 0.000925004, 1, 0, -1, 0.000925004, -4.37114e-08, 1.16645, 0.262495, -0.798387)
 
-[node name="battery" parent="." index="11" instance=ExtResource("8_4pcrn")]
-transform = Transform3D(0.162655, 0, 0.986683, 0, 1, 0, -0.986683, 0, 0.162655, -3.04833, -0.125, -1.35186)
-
-[node name="battery2" parent="." index="12" instance=ExtResource("8_4pcrn")]
+[node name="battery2" parent="." index="11" instance=ExtResource("8_4pcrn")]
 transform = Transform3D(0.981687, 0, 0.1905, 0, 1, 0, -0.1905, 0, 0.981687, 0.582652, -0.125, -1.99775)
 
-[node name="detector" parent="." index="13" instance=ExtResource("9_v60o7")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.226793, -0.25, -1.8768)
-
-[node name="stage_end" parent="." index="14" instance=ExtResource("10_5sorw")]
+[node name="stage_end" parent="." index="12" instance=ExtResource("10_5sorw")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.50907, 0.0320768, -0.863383)
+spawn = null
+next_map = "res://game/stage_overworld2.tscn"
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." index="15"]
+[node name="CSGBox3D" type="CSGBox3D" parent="." index="13"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0571289, 0.19458, -1.40466)
 use_collision = true
 size = Vector3(1.91504, 1.38916, 2.32837)
@@ -95,55 +89,67 @@ size = Vector3(2.62134, 1.90112, 0.807938)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.883789, -0.0614014, -0.964813)
 size = Vector3(0.865479, 1.90112, 0.9305)
 
-[node name="elevator" parent="." index="16" instance=ExtResource("11_4i2l6")]
-transform = Transform3D(-4.37114e-08, 4.04332e-11, 1, 0.000925004, 1, -3.46945e-18, -1, 0.000925004, -4.37114e-08, -1.69767, -0.281794, -2.1574)
+[node name="coin" parent="." index="14" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.58612, -0.146369, -1.14107)
 
-[node name="coin" parent="." index="17" instance=ExtResource("12_kg1n1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.23548, -0.146369, -0.743075)
+[node name="coin2" parent="." index="15" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.85148, -0.146369, -0.75034)
 
-[node name="coin2" parent="." index="18" instance=ExtResource("12_kg1n1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72657, -0.146369, -0.0122665)
+[node name="coin3" parent="." index="16" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14032, -0.146369, -0.761381)
 
-[node name="coin3" parent="." index="19" instance=ExtResource("12_kg1n1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76123, -0.146369, 0.629128)
+[node name="coin4" parent="." index="17" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39303, -0.146369, -2.5063)
 
-[node name="coin4" parent="." index="20" instance=ExtResource("12_kg1n1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.11687, -0.146369, 0.864931)
+[node name="coin7" parent="." index="18" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.44273, -0.146369, 1.11864)
 
-[node name="coin7" parent="." index="21" instance=ExtResource("12_kg1n1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35898, -0.146369, -0.804627)
+[node name="coin17" parent="." index="19" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.06874, -0.146369, 1.6122)
 
-[node name="coin8" parent="." index="22" instance=ExtResource("12_kg1n1")]
+[node name="coin18" parent="." index="20" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.358201, -0.146369, 1.72158)
+
+[node name="coin19" parent="." index="21" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31171, -0.146369, 1.43526)
+
+[node name="coin20" parent="." index="22" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.75663, -0.146369, 0.822908)
+
+[node name="coin8" parent="." index="23" instance=ExtResource("12_kg1n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.78895, -0.146369, -3.09533)
 
-[node name="coin9" parent="." index="23" instance=ExtResource("12_kg1n1")]
+[node name="coin9" parent="." index="24" instance=ExtResource("12_kg1n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55624, -0.146369, -3.92561)
 
-[node name="coin10" parent="." index="24" instance=ExtResource("12_kg1n1")]
+[node name="coin10" parent="." index="25" instance=ExtResource("12_kg1n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01022, -0.146369, -4.24528)
 
-[node name="coin11" parent="." index="25" instance=ExtResource("12_kg1n1")]
+[node name="coin11" parent="." index="26" instance=ExtResource("12_kg1n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.555876, -0.146369, -4.31212)
 
-[node name="coin12" parent="." index="26" instance=ExtResource("12_kg1n1")]
+[node name="coin12" parent="." index="27" instance=ExtResource("12_kg1n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.86436, -0.146369, -4.14614)
 
-[node name="coin13" parent="." index="27" instance=ExtResource("12_kg1n1")]
+[node name="coin13" parent="." index="28" instance=ExtResource("12_kg1n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.95973, -0.146369, -3.73955)
 
-[node name="coin14" parent="." index="28" instance=ExtResource("12_kg1n1")]
+[node name="coin14" parent="." index="29" instance=ExtResource("12_kg1n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.67082, -0.146369, -3.0409)
 
-[node name="coin15" parent="." index="29" instance=ExtResource("12_kg1n1")]
+[node name="coin15" parent="." index="30" instance=ExtResource("12_kg1n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8129, -0.146369, -1.95483)
 
-[node name="coin5" parent="." index="30" instance=ExtResource("12_kg1n1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.364025, -0.146369, 1.05586)
+[node name="coin5" parent="." index="31" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39991, -0.146369, -0.724417)
 
-[node name="coin6" parent="." index="31" instance=ExtResource("12_kg1n1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49854, -0.146369, 1.12047)
+[node name="coin16" parent="." index="32" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.293116, -0.146369, -1.89393)
 
-[node name="ReflectionProbe" parent="." index="32"]
+[node name="coin6" parent="." index="33" instance=ExtResource("12_kg1n1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707275, -0.146369, -0.718148)
+
+[node name="ReflectionProbe" parent="." index="34"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20773, 0)
 
 [connection signal="collected_coin" from="minisil" to="hud" method="_on_collected_coin"]

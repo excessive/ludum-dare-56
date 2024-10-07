@@ -4,10 +4,12 @@
 script/source = "extends Button
 
 @export_file(\"*.tscn\") var game_scene: String
+@export var do_grab := false
 
 func _ready() -> void:
-	grab_click_focus()
-	grab_focus()
+	if do_grab:
+		grab_click_focus()
+		grab_focus()
 	pressed.connect(func():
 		disabled = true
 		ExTransition.auto_transition_threaded(game_scene))
@@ -57,6 +59,7 @@ layout_mode = 2
 text = "play"
 script = SubResource("GDScript_fr82b")
 game_scene = "res://game/stage_overworld.tscn"
+do_grab = true
 
 [node name="options" type="Button" parent="AspectRatioContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 visible = false
@@ -82,22 +85,19 @@ alignment = 1
 [node name="RichTextLabel" type="RichTextLabel" parent="AspectRatioContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[b]credits[/b]
-i have made game
-izu has been helpful ty
+text = "notes
 
-[b]todo list so i can't ignore it[/b]
-[ul]
- models
- hud stuff
- levels
- also everything
-[/ul]
+i ran out of time to design levels and fix the menus up, so there's just two short levels
 
-[b]also notes[/b]
+the perils of solo dev
 
-there is only one level right now just to test the mechanics out
+special thanks to izuthree for all the design input
 
-controls are wasdgqe tab space escape and gamepad should work too
-"
+keyboard controls are wasd+gqe+tab+space 
+
+gamepad controls are left stick, shoulder buttons, x (square), a (cross) and y (triangle)
+
+hold the grab button (g/x) to make a connection, tap it to cut a connection
+
+switch character with tab/y"
 fit_content = true

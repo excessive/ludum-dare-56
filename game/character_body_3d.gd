@@ -20,11 +20,11 @@ var _current_plug: CableSocket
 
 var _held_time := 0.0
 var _active := false
-var coins := 0
-@onready var max_coins := get_tree().get_nodes_in_group(&"collectible").size()
 
 static var active_character: NodePath
 static var characters: Array[NodePath] = []
+
+signal collected_coin
 
 enum AnimState {
 	Idle,
@@ -61,7 +61,7 @@ func _update_animation():
 func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		_anim_state = AnimState.Idle
-		if velocity.length() > 0.1:
+		if velocity.length() > 0.05:
 			_anim_state = AnimState.Run
 	else:
 		_anim_state = AnimState.Jump
@@ -70,16 +70,17 @@ func _physics_process(delta: float) -> void:
 	for item: Node3D in $collectible_grabber.get_overlapping_areas():
 		if item.is_in_group(&"collectible"):
 			item.queue_free()
-			coins += 1
-			var total := get_tree().get_nodes_in_group(&"collectible").size()
-			Console.print_line("coin get (%d/%d)" % [coins, max_coins], true)
-			if coins >= max_coins:
-				Console.print_line("all coins collected!", true)
+			collected_coin.emit()
 
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if input_dir.length_squared() > 0:
+		input_dir = input_dir.normalized() * pow(input_dir.length(), 0.5)
 	if not _active:
 		input_dir *= 0
 	var direction := (transform.basis * ($cam_pivot as Node3D).basis * Vector3(input_dir.x, 0, input_dir.y)).limit_length() * move_speed
+	#if not is_on_floor() or _anim_state == AnimState.Run and velocity.length() > 0:
+		#direction = direction.lerp(direction.project(velocity).normalized() * direction.length(), 0.75)
+
 	direction.y = velocity.y
 	velocity = velocity.move_toward(direction, accel_speed * delta)
 

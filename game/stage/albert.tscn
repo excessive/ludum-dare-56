@@ -9,7 +9,8 @@ radius = 0.1
 [node name="albert" node_paths=PackedStringArray("avatar") instance=ExtResource("1_qpeyq")]
 avatar = NodePath("albert")
 jump_height = 0.33
-accel_speed = 15.0
+move_speed = 1.75
+accel_speed = 20.0
 rotation_base = 45.0
 
 [node name="Label3D" type="Label3D" parent="." index="4"]

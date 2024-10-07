@@ -11,7 +11,7 @@ shader_parameter/mieCoefficient = 0.005
 shader_parameter/mieDirectionalG = 0.8
 shader_parameter/light_power = 0.5
 shader_parameter/light_power_adjust = 4.0
-shader_parameter/exposure = -4.0
+shader_parameter/exposure = -1.5
 shader_parameter/ambient_boost = 0.0
 
 [resource]

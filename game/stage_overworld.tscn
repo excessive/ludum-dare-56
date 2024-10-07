@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://dx1ww3fovu8ui"]
 
 [ext_resource type="PackedScene" uid="uid://85bussvsg4wv" path="res://game/stage_base.tscn" id="1_el18k"]
-[ext_resource type="Texture2D" uid="uid://xn7h4m0c04vh" path="res://addons/rope/textures/dark.png" id="2_67x0s"]
+[ext_resource type="Texture2D" uid="uid://d7cl0ugm54xa" path="res://game/materials/grass.png" id="2_lkntf"]
 [ext_resource type="PackedScene" uid="uid://bhx7xy04wjduy" path="res://game/stage/minisil.tscn" id="3_5vquv"]
 [ext_resource type="Script" path="res://game/remote_send.gd" id="4_tn7nl"]
 [ext_resource type="PackedScene" uid="uid://basixwkciwjv4" path="res://game/stage/albert.tscn" id="5_qt84o"]
@@ -20,7 +20,7 @@ size = Vector3(10, 0.5, 10)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbjay"]
 albedo_color = Color(0.482973, 0.482973, 0.482973, 1)
-albedo_texture = ExtResource("2_67x0s")
+albedo_texture = ExtResource("2_lkntf")
 uv1_triplanar = true
 texture_filter = 5
 
@@ -145,3 +145,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49854, -0.146369, 1.12047)
 
 [node name="ReflectionProbe" parent="." index="32"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20773, 0)
+
+[connection signal="collected_coin" from="minisil" to="hud" method="_on_collected_coin"]
+[connection signal="collected_coin" from="albert" to="hud" method="_on_collected_coin"]

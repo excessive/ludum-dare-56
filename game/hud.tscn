@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b0jwplxuwswa1"]
 
-[ext_resource type="Script" path="res://hud.gd" id="1_v3bj3"]
-[ext_resource type="Script" path="res://remote_send.gd" id="2_e2rrg"]
+[ext_resource type="Script" path="res://game/hud.gd" id="1_v3bj3"]
+[ext_resource type="Script" path="res://game/remote_send.gd" id="2_e2rrg"]
 
 [sub_resource type="GDScript" id="GDScript_d7l8y"]
 script/source = "extends ColorRect

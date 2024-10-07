@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://basixwkciwjv4"]
+
+[ext_resource type="PackedScene" uid="uid://dvc72ad3xv8sf" path="res://game/character.tscn" id="1_qpeyq"]
+[ext_resource type="PackedScene" uid="uid://brvg8sybibhso" path="res://game/anim_albert.tscn" id="2_dni7t"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_44sfa"]
+radius = 0.1
+
+[node name="albert" instance=ExtResource("1_qpeyq")]
+jump_height = 0.33
+move_speed = 4.0
+accel_speed = 7.0
+
+[node name="body_tracker" parent="body_pivot" index="0"]
+remote_path = NodePath("../../albert")
+
+[node name="Label3D" type="Label3D" parent="." index="4"]
+visible = false
+pixel_size = 0.0025
+billboard = 1
+no_depth_test = true
+text = "albert"
+
+[node name="albert" parent="." index="5" instance=ExtResource("2_dni7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+shape = SubResource("SphereShape3D_44sfa")

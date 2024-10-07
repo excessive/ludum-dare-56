@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://b74ocdgjsa72e"]
+
+[ext_resource type="PackedScene" uid="uid://br8f2kpok5pwv" path="res://game/models/minisil.glb" id="1_0m7a4"]
+
+[node name="minisil" instance=ExtResource("1_0m7a4")]

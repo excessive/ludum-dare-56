@@ -1,15 +1,15 @@
 [gd_scene load_steps=15 format=3 uid="uid://dx1ww3fovu8ui"]
 
-[ext_resource type="PackedScene" uid="uid://85bussvsg4wv" path="res://stage_base.tscn" id="1_el18k"]
+[ext_resource type="PackedScene" uid="uid://85bussvsg4wv" path="res://game/stage_base.tscn" id="1_el18k"]
 [ext_resource type="Texture2D" uid="uid://xn7h4m0c04vh" path="res://addons/rope/textures/dark.png" id="2_67x0s"]
-[ext_resource type="PackedScene" uid="uid://bhx7xy04wjduy" path="res://minisil.tscn" id="3_5vquv"]
-[ext_resource type="Script" path="res://remote_send.gd" id="4_tn7nl"]
-[ext_resource type="PackedScene" uid="uid://basixwkciwjv4" path="res://albert.tscn" id="5_qt84o"]
-[ext_resource type="PackedScene" uid="uid://tbjqfdssj58b" path="res://door.tscn" id="6_fb221"]
-[ext_resource type="PackedScene" uid="uid://bbfksrj17d8sy" path="res://sliding_door.tscn" id="7_7qlif"]
-[ext_resource type="PackedScene" uid="uid://v0ogt1mn3guq" path="res://battery.tscn" id="8_4pcrn"]
-[ext_resource type="PackedScene" uid="uid://dga85xexl35hh" path="res://detector.tscn" id="9_v60o7"]
-[ext_resource type="PackedScene" uid="uid://bob462s3xnw4v" path="res://stage_end.tscn" id="10_5sorw"]
+[ext_resource type="PackedScene" uid="uid://bhx7xy04wjduy" path="res://game/stage/minisil.tscn" id="3_5vquv"]
+[ext_resource type="Script" path="res://game/remote_send.gd" id="4_tn7nl"]
+[ext_resource type="PackedScene" uid="uid://basixwkciwjv4" path="res://game/stage/albert.tscn" id="5_qt84o"]
+[ext_resource type="PackedScene" uid="uid://tbjqfdssj58b" path="res://game/stage/door.tscn" id="6_fb221"]
+[ext_resource type="PackedScene" uid="uid://bbfksrj17d8sy" path="res://game/stage/sliding_door.tscn" id="7_7qlif"]
+[ext_resource type="PackedScene" uid="uid://v0ogt1mn3guq" path="res://game/stage/battery.tscn" id="8_4pcrn"]
+[ext_resource type="PackedScene" uid="uid://dga85xexl35hh" path="res://game/stage/detector.tscn" id="9_v60o7"]
+[ext_resource type="PackedScene" uid="uid://bob462s3xnw4v" path="res://game/stage/stage_end.tscn" id="10_5sorw"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p0ko4"]
 
@@ -27,7 +27,6 @@ material = SubResource("StandardMaterial3D_qbjay")
 size = Vector3(10, 0.5, 10)
 
 [node name="stage_area" instance=ExtResource("1_el18k")]
-leave_scene = "res://stage_overworld.tscn"
 
 [node name="floor" type="StaticBody3D" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -74,6 +73,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.5090
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." index="14"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0571289, 0.19458, -1.40466)
+use_collision = true
 size = Vector3(1.91504, 1.38916, 2.32837)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" index="0"]

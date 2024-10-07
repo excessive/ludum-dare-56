@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ludum dare 56"
-run/main_scene="res://splash.tscn"
+run/main_scene="res://game/splash.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
@@ -40,7 +40,7 @@ import/blender/enabled=false
 
 [gui]
 
-theme/custom="res://ui_theme.tres"
+theme/custom="res://game/materials/ui_theme.tres"
 
 [input]
 
@@ -132,3 +132,4 @@ pen_tablet/driver.windows="dummy"
 textures/default_filters/anisotropic_filtering_level=4
 textures/decals/filter=5
 textures/light_projectors/filter=5
+anti_aliasing/quality/screen_space_aa=1

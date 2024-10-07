@@ -1,6 +1,6 @@
 [gd_resource type="Sky" load_steps=3 format=3 uid="uid://db01mvp4dsmlb"]
 
-[ext_resource type="Shader" path="res://materials/sky.gdshader" id="1_blw5g"]
+[ext_resource type="Shader" path="res://game/materials/sky.gdshader" id="1_blw5g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_osq8b"]
 shader = ExtResource("1_blw5g")
@@ -16,4 +16,3 @@ shader_parameter/ambient_boost = 0.0
 
 [resource]
 sky_material = SubResource("ShaderMaterial_osq8b")
-process_mode = 3

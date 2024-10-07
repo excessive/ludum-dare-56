@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://br8f2kpok5pwv"
-path="res://.godot/imported/minisil.glb-f41890d05fbf585918fa3356be350bd6.scn"
+path="res://.godot/imported/minisil.glb-8a3b5b4c7256a51975a0dd269250ac5b.scn"
 
 [deps]
 
-source_file="res://minisil.glb"
-dest_files=["res://.godot/imported/minisil.glb-f41890d05fbf585918fa3356be350bd6.scn"]
+source_file="res://game/models/minisil.glb"
+dest_files=["res://.godot/imported/minisil.glb-8a3b5b4c7256a51975a0dd269250ac5b.scn"]
 
 [params]
 
@@ -33,4 +33,4 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
 gltf/naming_version=1
-gltf/embedded_image_handling=1
+gltf/embedded_image_handling=2

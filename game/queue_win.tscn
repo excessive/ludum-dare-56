@@ -14,4 +14,4 @@ func _ready() -> void:
 
 [node name="win" type="Node"]
 script = SubResource("GDScript_2m48d")
-load_scene = "res://victory.tscn"
+load_scene = "res://game/victory.tscn"

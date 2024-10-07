@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dmukdohj7bdb2"
-path="res://.godot/imported/albert.glb-025f2fc82ed1f32b947af7f2bdbafd64.scn"
+path="res://.godot/imported/albert.glb-76ae363030155caba5637af69e8abc42.scn"
 
 [deps]
 
-source_file="res://albert.glb"
-dest_files=["res://.godot/imported/albert.glb-025f2fc82ed1f32b947af7f2bdbafd64.scn"]
+source_file="res://game/models/albert.glb"
+dest_files=["res://.godot/imported/albert.glb-76ae363030155caba5637af69e8abc42.scn"]
 
 [params]
 
@@ -33,4 +33,4 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
 gltf/naming_version=1
-gltf/embedded_image_handling=1
+gltf/embedded_image_handling=2

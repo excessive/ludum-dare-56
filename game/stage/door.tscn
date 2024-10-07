@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://tbjqfdssj58b"]
 
-[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://cable_socket.tscn" id="1_um2cy"]
+[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://game/stage/cable_socket.tscn" id="1_um2cy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7cw63"]
 margin = 0.02

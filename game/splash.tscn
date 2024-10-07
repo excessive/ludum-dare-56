@@ -12,4 +12,4 @@ grow_vertical = 2
 
 [node name="splash_exmoe" parent="." instance=ExtResource("1_b3apb")]
 layout_mode = 1
-next_scene_path = "res://main_menu.tscn"
+next_scene_path = "res://game/main_menu.tscn"

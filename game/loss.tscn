@@ -41,4 +41,4 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 script = SubResource("GDScript_wds5r")
-next_screen = "res://overworld.tscn"
+next_screen = "res://game/stage_overworld.tscn"

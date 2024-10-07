@@ -1,23 +1,23 @@
 [gd_scene load_steps=13 format=3 uid="uid://85bussvsg4wv"]
 
-[ext_resource type="Script" path="res://stage_area.gd" id="1_u1fgl"]
-[ext_resource type="PackedScene" uid="uid://basixwkciwjv4" path="res://albert.tscn" id="2_uqq17"]
+[ext_resource type="Script" path="res://game/stage_area.gd" id="1_u1fgl"]
+[ext_resource type="PackedScene" uid="uid://basixwkciwjv4" path="res://game/stage/albert.tscn" id="2_uqq17"]
 [ext_resource type="Material" uid="uid://b7i0e8j2roabl" path="res://addons/rope/cable_material.tres" id="3_ec3e0"]
-[ext_resource type="PackedScene" uid="uid://dcuuj138lbykm" path="res://loss.tscn" id="4_w2g2g"]
-[ext_resource type="PackedScene" uid="uid://bhx7xy04wjduy" path="res://minisil.tscn" id="5_nwklg"]
-[ext_resource type="PackedScene" uid="uid://chouijdrvq2ba" path="res://queue_lose.tscn" id="6_xmq8f"]
-[ext_resource type="PackedScene" uid="uid://bdbx7tru3nnk2" path="res://queue_win.tscn" id="7_s12s7"]
+[ext_resource type="PackedScene" uid="uid://dcuuj138lbykm" path="res://game/loss.tscn" id="4_w2g2g"]
+[ext_resource type="PackedScene" uid="uid://bhx7xy04wjduy" path="res://game/stage/minisil.tscn" id="5_nwklg"]
+[ext_resource type="PackedScene" uid="uid://chouijdrvq2ba" path="res://game/queue_lose.tscn" id="6_xmq8f"]
+[ext_resource type="PackedScene" uid="uid://bdbx7tru3nnk2" path="res://game/queue_win.tscn" id="7_s12s7"]
 [ext_resource type="Material" uid="uid://bbatuvqq1yjxn" path="res://addons/rope/rope_material.tres" id="8_04rvd"]
-[ext_resource type="PackedScene" uid="uid://d0kxh5ogv55c7" path="res://victory.tscn" id="9_0fpcw"]
-[ext_resource type="PackedScene" uid="uid://b0jwplxuwswa1" path="res://hud.tscn" id="10_0fn8s"]
-[ext_resource type="Environment" uid="uid://bu60iui8ki4vr" path="res://materials/env.tres" id="11_r8tx5"]
-[ext_resource type="CameraAttributesPractical" uid="uid://ukpnmx37sm8c" path="res://materials/cam.tres" id="12_3yf40"]
+[ext_resource type="PackedScene" uid="uid://d0kxh5ogv55c7" path="res://game/victory.tscn" id="9_0fpcw"]
+[ext_resource type="PackedScene" uid="uid://b0jwplxuwswa1" path="res://game/hud.tscn" id="10_0fn8s"]
+[ext_resource type="Environment" uid="uid://bu60iui8ki4vr" path="res://game/materials/env.tres" id="11_r8tx5"]
+[ext_resource type="CameraAttributesPractical" uid="uid://ukpnmx37sm8c" path="res://game/materials/cam.tres" id="12_3yf40"]
 
 [node name="stage_area" type="Area3D"]
 monitorable = false
 script = ExtResource("1_u1fgl")
 size = Vector3(25, 25, 25)
-leave_scene = "res://overworld.tscn"
+leave_scene = "res://game/stage_overworld.tscn"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("11_r8tx5")

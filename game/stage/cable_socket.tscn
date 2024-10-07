@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bm2num3cbkjcf"]
 
-[ext_resource type="Script" path="res://cable_socket.gd" id="1_yyn2a"]
+[ext_resource type="Script" path="res://game/cable_socket.gd" id="1_yyn2a"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_y8d6c"]
 radius = 0.1

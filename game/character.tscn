@@ -1,11 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvc72ad3xv8sf"]
+[gd_scene load_steps=5 format=3 uid="uid://dvc72ad3xv8sf"]
 
-[ext_resource type="Script" path="res://character_body_3d.gd" id="1_f1p2t"]
-[ext_resource type="Script" path="res://lazy_remote_transform.gd" id="2_v6ssg"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bswdr"]
-radius = 0.1
-height = 0.5
+[ext_resource type="Script" path="res://game/character_body_3d.gd" id="1_f1p2t"]
+[ext_resource type="Script" path="res://game/lazy_remote_transform.gd" id="2_v6ssg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_716up"]
 radius = 0.1
@@ -28,9 +24,6 @@ transform = Transform3D(1, 0, 0, 0, 0.595412, 0.803421, 0, -0.803421, 0.595412, 
 script = ExtResource("2_v6ssg")
 position_speed = 5.0
 rotation_speed = 10.0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_bswdr")
 
 [node name="placeholder" type="MeshInstance3D" parent="."]
 visible = false

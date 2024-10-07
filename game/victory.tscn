@@ -41,4 +41,4 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 script = SubResource("GDScript_nsb8t")
-next_screen = "res://main_menu.tscn"
+next_screen = "res://game/main_menu.tscn"

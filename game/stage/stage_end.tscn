@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bob462s3xnw4v"]
 
-[ext_resource type="Script" path="res://box_trigger.gd" id="1_ctt3m"]
-[ext_resource type="PackedScene" uid="uid://bdbx7tru3nnk2" path="res://queue_win.tscn" id="2_jh7gm"]
-[ext_resource type="Script" path="res://stage_timer.gd" id="3_kw6tx"]
+[ext_resource type="Script" path="res://game/box_trigger.gd" id="1_ctt3m"]
+[ext_resource type="PackedScene" uid="uid://bdbx7tru3nnk2" path="res://game/queue_win.tscn" id="2_jh7gm"]
+[ext_resource type="Script" path="res://game/stage_timer.gd" id="3_kw6tx"]
 
 [node name="stage_end" type="Area3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.271908, 0)

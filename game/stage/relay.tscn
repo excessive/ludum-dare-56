@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://crd17u3ryjeuf"]
 
-[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://cable_socket.tscn" id="1_q7bmk"]
-[ext_resource type="Script" path="res://cable_node.gd" id="2_p1a3k"]
+[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://game/stage/cable_socket.tscn" id="1_q7bmk"]
+[ext_resource type="Script" path="res://game/cable_node.gd" id="2_p1a3k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jidff"]
 size = Vector3(0.25, 0.25, 0.25)

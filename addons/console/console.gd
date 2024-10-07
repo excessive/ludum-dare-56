@@ -34,7 +34,7 @@ var was_paused_already := false
 
 
 func _ready() -> void:
-	control.theme = load("res://console_theme.tres")
+	control.theme = load("res://game/materials/console_theme.tres")
 	var canvas_layer := CanvasLayer.new()
 	canvas_layer.layer = 3
 	add_child(canvas_layer)

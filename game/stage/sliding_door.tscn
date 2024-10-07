@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bbfksrj17d8sy"]
 
-[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://cable_socket.tscn" id="1_ee71f"]
+[ext_resource type="PackedScene" uid="uid://bm2num3cbkjcf" path="res://game/stage/cable_socket.tscn" id="1_ee71f"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xrdls"]
 
